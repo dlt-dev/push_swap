@@ -38,19 +38,32 @@ Initialisation :
     Images : img = mlx_new_image(mlx, width, height); 
     addr = mlx_get_data_addr(img, &bpp;, &line;_len, &endian;);
 
-Événements : mlx_hook(win, event, mask, func, param); mlx_mouse_hook(win, func, param);
-mlx_key_hook(win, func, param); mlx_loop(mlx);
-Contrôles usuels
-- Flèches ←↑→↓ : déplacer la vue. - + / - ou scroll souris : zoom/dézoom. - Clic souris : zoom
-centré. - ESC : quitter le programme.
-Gestion des couleurs
-Basée sur le nombre d’itérations avant divergence. Exemple : color = (iter * 255 / max_iter) << 16; //
-dégradé rouge Possibilités : palettes, cycles de couleurs, interpolation.
-Structure type
-1. Init MLX (fenêtre + image). 2. Définir paramètres fractale (min_re, max_re, etc.). 3. Boucler sur
-chaque pixel → calcul fractale → couleur → écrire dans image. 4. mlx_put_image_to_window pour
-afficher. 5. Gestion événements clavier/souris → redessiner si nécessaire.
-Astuces et pièges
-- Redessiner seulement après un zoom/déplacement (pas en boucle infinie). - Conversion pixel →
-complexe : bien gérer bornes. - Fermer proprement (mlx_destroy_window, mlx_destroy_image). -
-Vérifier malloc/free (structures, palettes). - Utiliser double pour la précision des calculs.
+Événements : 
+
+    mlx_hook(win, event, mask, func, param); 
+    mlx_mouse_hook(win, func, param);
+    mlx_key_hook(win, func, param); 
+    mlx_loop(mlx);
+    
+// Contrôles usuels
+
+- Flèches ←↑→↓ : 
+  déplacer la vue.
+
+- + / - ou scroll souris : 
+  zoom/dézoom. 
+
+- ESC :
+  quitter le programme.
+
+- C :
+  color shifting
+
+
+// Gestion des couleurs
+
+Les couleurs viennent du nombre d’itérations avant divergence : 
+chaque pixel est itéré jusqu’à un maximum (max_iter).
+Si le point diverge vite, il reçoit une couleur claire/vive ; 
+s’il diverge lentement ou jamais, une autre couleur.
+On applique ensuite une palette ou un dégradé en fonction de ce nombre d’itérations, ce qui révèle les formes fractales.
