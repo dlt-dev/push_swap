@@ -50,7 +50,7 @@ Initialisation :
 - Flèches ←↑→↓ : 
   déplacer la vue.
 
-- + / - ou scroll souris : 
+- scroll souris : 
   zoom/dézoom. 
 
 - ESC :
